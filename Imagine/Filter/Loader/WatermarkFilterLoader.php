@@ -60,7 +60,9 @@ class WatermarkFilterLoader implements LoaderInterface
 
         if ($options['size']) {
             $factor = $options['size'] * min($size->getWidth() / $watermarkSize->getWidth(), $size->getHeight() / $watermarkSize->getHeight());
-
+            if ($watermarkSize->getWidth() * $factor < 1 || $watermarkSize->getHeight() * $factor < 1){
+               return $image;
+            }
             $watermark->resize(new Box($watermarkSize->getWidth() * $factor, $watermarkSize->getHeight() * $factor));
             $watermarkSize = $watermark->getSize();
         }
